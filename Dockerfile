@@ -55,4 +55,5 @@ RUN make install && \
 COPY docker/scripts /scripts
 WORKDIR /scripts
 
-ENTRYPOINT ["./p4apprunner.py"]
+#ENTRYPOINT ["./p4apprunner.py"]
+#ENTRYPOINT["/bin/bash"]

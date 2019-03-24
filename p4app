@@ -56,8 +56,14 @@ function run-p4app {
             --name "$P4APP_NAME" \
             -v $1:$APP_TO_RUN \
             -v "$P4APP_LOGDIR":/tmp/p4app_logs \
+            --network=network1 \
              $P4APP_CONTAINER_ARGS \
-             $P4APP_IMAGE $APP_TO_RUN "${@:2}"
+             --entrypoint "/bin/bash" \
+             $P4APP_IMAGE 
+             #$P4APP_IMAGE $APP_TO_RUN "${@:2}"
+            #-v "/home/luuk/code/p4app/docker/scripts/p4apprunner.py:/scripts/p4apprunner.py" \
+            #-v "/home/luuk/code/P4-draft-hinden-6man-mtu-option/start_simple_switch.sh:/scripts/start_simple_switch.sh" \
+
 }
 
 function run-command {

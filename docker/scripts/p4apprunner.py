@@ -276,6 +276,15 @@ def run_custom(manifest):
         sys.exit(1)
     return rv
 
+def run_simpleswitch(manifest):
+    output_file = run_compile_bmv2(manifest)
+    port_mappings = " ".join(["-i %s@%s" % (k, v) for (k,v) in manifest.target_config['port-mapping'].items()])
+    rv = run_command('sudo simple_switch --log-console -i 0@eth0 -i 1@eth1 %s' % (output_file))
+
+    if rv != 0:
+        sys.exit(1)
+    return rv
+
 def main():
     log('Entering build directory.')
     os.chdir(args.build_dir)
@@ -310,6 +319,8 @@ def main():
         rc = run_stf(manifest)
     elif backend == 'custom':
         rc = run_custom(manifest)
+    elif backend == 'simpleswitch':
+        rc = run_simpleswitch(manifest)
     else:
         log_error('Target specifies unknown backend:', backend)
         sys.exit(1)
